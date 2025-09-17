@@ -1,0 +1,15 @@
+---
+
+- hosts: localhost
+  gather_facts: false
+  roles:
+    - role: core
+      tags: [core]
+    - role: mgmt
+      tags: [mgmt]
+    - role: challenges
+      tags: [challenges]
+    - role: web
+      tags: [web]
+    - role: pwn
+      tags: [pwn]
