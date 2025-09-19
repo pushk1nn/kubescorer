@@ -39,9 +39,10 @@
         name: image-registry
         namespace: core
       spec:
+        type: NodePort
         selector:
           app: image-registry
         ports:
         - port: 5000
           targetPort: 5000
-        type: LoadBalancer
+          protocol: TCP
