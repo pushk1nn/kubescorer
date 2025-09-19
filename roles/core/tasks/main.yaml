@@ -39,7 +39,7 @@
         name: image-registry
         namespace: core
       spec:
-        type: NodePort
+        type: LoadBalancer
         selector:
           app: image-registry
         ports:

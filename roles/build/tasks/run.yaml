@@ -7,7 +7,7 @@
       args:
         SERVICE: "{{ service }}"
         TEAM: "{{ team }}"
-    name: "localhost:5000/{{ host }}-{{ service }}-scorecheck"
+    name: "image-registry.core.svc.cluster.local:5000/{{ host }}-{{ service }}-scorecheck"
     tag: v1
     push: true
     source: build

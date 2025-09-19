@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: {{host}}-{{service}}-scorecheck
-          image: localhost:5000/{{host}}-{{service}}-scorecheck:latest
+          image: image-registry.core.svc.cluster.local:5000/{{host}}-{{service}}-scorecheck:latest
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: Always
