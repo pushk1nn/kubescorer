@@ -6,3 +6,5 @@ team_prefix: "blueteam"
 services:
   http:
     - name: "arasaka"
+
+teams: 3

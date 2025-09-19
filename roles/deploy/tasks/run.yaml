@@ -1,2 +1,6 @@
 ---
 
+- name: Deploy scoring resources 
+  kubernetes.core.k8s:
+    state: present
+    template: 'deploy.j2'

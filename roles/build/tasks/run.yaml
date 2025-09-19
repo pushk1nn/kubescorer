@@ -1,0 +1,12 @@
+---
+
+- name: Build an image and push it to a private repo
+  community.docker.docker_image:
+    build:
+      path: ./scorechecks/{{ service }}
+      args:
+        SERVICE: "{{ service }}"
+        TEAM: "{{ team }}"
+    name: "localhost:5000/{{ host }}-{{ service }}-scorecheck"
+    tag: v1
+    push: true
