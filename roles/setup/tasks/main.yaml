@@ -47,7 +47,10 @@
     mode: '0755'
 
 - name: Execute Docker install script
-  ansible.builtin.script: /home/debian/docker-install.sh
+  command: /home/debian/docker-install.sh
+  args:
+    chdir: /home/debian
+    creates: /usr/bin/docker 
 
 - name: Install Docker
   ansible.builtin.apt:

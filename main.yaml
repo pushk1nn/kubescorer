@@ -8,7 +8,7 @@
   roles:
     - role: setup
       tags: [setup]
-  when: setup | default(false)
+      when: setup | default(false)
 
 - hosts: kubescore-local
   gather_facts: false
@@ -16,8 +16,10 @@
   roles:
     - role: core
       tags: [core]
+      when: build | default(false)
     - role: build
       tags: [build]
+      when: build | default(false)
     - role: deploy
       tags: [build]
-  when: build | default(false)
+      when: build | default(false)

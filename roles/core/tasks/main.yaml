@@ -2,9 +2,10 @@
 
 - name: Create namespace for core resources
   kubernetes.core.k8s:
-  kind: Namespace
-  metadata:
     name: core
+    api_version: v1
+    kind: Namespace
+    state: present
 
 - name: Create local image registry
   kubernetes.core.k8s:
