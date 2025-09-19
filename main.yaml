@@ -13,6 +13,8 @@
 - hosts: kubescore-local
   gather_facts: false
   become: true
+  environment:
+    KUBECONFIG: "/home/debian/.kube/config"
   roles:
     - role: core
       tags: [core]
