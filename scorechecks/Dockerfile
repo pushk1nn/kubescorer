@@ -21,4 +21,6 @@ ENV TEAM=${TEAM}
 
 COPY shared/healthcheck_loop.sh ${SERVICE}/healthcheck.py shared/healthz_webserver.py /home/user/
 
+USER user
+
 CMD kctf_drop_privs /home/user/healthcheck_loop.sh & /home/user/healthz_webserver.py
