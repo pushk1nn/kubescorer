@@ -22,6 +22,6 @@
     - role: build
       tags: [build]
       when: build | default(false)
-    # - role: deploy
-    #   tags: [build]
-    #   when: build | default(false)
+    - role: deploy
+      tags: [build]
+      when: build | default(false)
