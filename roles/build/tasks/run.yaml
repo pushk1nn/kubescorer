@@ -10,3 +10,4 @@
     name: "localhost:5000/{{ host }}-{{ service }}-scorecheck"
     tag: v1
     push: true
+    source: build
