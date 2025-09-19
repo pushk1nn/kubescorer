@@ -1,7 +1,7 @@
 ---
 
 # Deploy HTTP scorechecks
-- include_tasks: roles/build/tasks/run.yaml
+- include_tasks: roles/deploy/tasks/run.yaml
   vars:
     service: "{{ item.1.name }}"
     team: "{{ item.0 }}"
