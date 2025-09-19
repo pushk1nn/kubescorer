@@ -1,0 +1,46 @@
+---
+
+- name: Create namespace for core resources
+  kubernetes.core.k8s:
+  kind: Namespace
+  metadata:
+    name: core
+
+- name: Create local image registry
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: image-registry
+        namespace: core
+      spec:
+        selector:
+          matchLabels:
+            app: image-registry
+        template:
+          metadata:
+            labels:
+              app: image-registry
+          spec:
+            containers:
+            - name: registry
+              image: registry:2
+              ports:
+              - containerPort: 5000
+
+- name: Expose image registry
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: image-registry
+        namespace: core
+      spec:
+        selector:
+          app: image-registry
+        ports:
+        - port: 5000
+          targetPort: 5000
+        type: LoadBalancer

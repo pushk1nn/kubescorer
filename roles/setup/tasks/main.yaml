@@ -1,0 +1,64 @@
+---
+
+- name: Download k3s installation script
+  ansible.builtin.get_url: 
+    url: https://get.k3s.io/
+    dest: /home/debian/k3s-install.sh
+    mode: '0755'
+
+- name: Execute k3s installation script
+  command: /home/debian/k3s-install.sh
+  args:
+    chdir: /home/debian
+    creates: /usr/local/bin/k3s 
+
+- name: Install Python Kubernetes client
+  ansible.builtin.package:
+    name: python3-kubernetes
+    state: present
+
+- name: Create the ansible directory
+  ansible.builtin.file:
+    path: /home/debian/.kube 
+    state: directory
+    owner: debian
+
+- name: Copy kube config to user
+  ansible.builtin.copy:
+    remote_src: yes
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: /home/debian/.kube/config
+    owner: debian
+    group: debian
+    mode: '0644'
+
+- name: Assign kubeconfig on every login
+  ansible.builtin.lineinfile:
+    path: /home/debian/.bashrc
+    line: "export KUBECONFIG=/home/debian/.kube/config"
+    insertafter: EOF
+
+- name: Copy Docker install script
+  copy:
+    src: files/docker-install.sh
+    dest: /home/debian/docker-install.sh
+    owner: debian
+    group: debian
+    mode: '0755'
+
+- name: Execute Docker install script
+  ansible.builtin.script: /home/debian/docker-install.sh
+
+- name: Install Docker
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+
+- name: Install community.docker collection
+  ansible.builtin.command: >
+    ansible-galaxy collection install community.docker
+
