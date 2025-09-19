@@ -22,7 +22,7 @@ export TERMINFO=/etc/terminfo
 
 while true; do
   echo -n "[$(date)] "
-  if timeout "${TIMEOUT}" /home/user/healthcheck.py; then
+  if timeout "${TIMEOUT}" /home/user/healthcheck.py $1; then
     echo 'ok' | tee /tmp/healthz
   else
     echo -n "$? "
