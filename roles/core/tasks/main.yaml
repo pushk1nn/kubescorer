@@ -46,3 +46,16 @@
         - port: 5000
           targetPort: 5000
           protocol: TCP
+
+- name: Copy registries.yaml
+  ansible.builtin.copy:
+    src: files/registries.yaml
+    dest: /etc/rancher/k3s/registries.yaml
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Reload k3s
+  ansible.builtin.systemd_service:
+    name: k3s.service
+    state: reloaded
