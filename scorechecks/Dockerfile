@@ -17,7 +17,8 @@ ARG SERVICE
 ENV SERVICE=${SERVICE}
 
 ARG TEAM
+ENV TEAM=${TEAM}
 
 COPY shared/healthcheck_loop.sh ${SERVICE}/healthcheck.py shared/healthz_webserver.py /home/user/
 
-CMD /home/user/healthcheck_loop.sh {TEAM} & /home/user/healthz_webserver.py
+CMD /bin/bash -c "/home/user/healthcheck_loop.sh $TEAM & /home/user/healthz_webserver.py"
