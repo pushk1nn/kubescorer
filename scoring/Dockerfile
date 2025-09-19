@@ -16,6 +16,6 @@ FROM gcr.io/kctf-docker/healthcheck@sha256:6709709a8cfd6e2d743c86d58398c00ca4eb2
 ARG SERVICE
 ENV SERVICE=${SERVICE}
 
-COPY healthcheck_loop.sh ../${SERVICE}/healthcheck.py healthz_webserver.py /home/user/
+COPY shared/healthcheck_loop.sh ${SERVICE}/healthcheck.py shared/healthz_webserver.py /home/user/
 
 CMD kctf_drop_privs /home/user/healthcheck_loop.sh & /home/user/healthz_webserver.py
