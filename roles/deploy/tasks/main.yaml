@@ -1,0 +1,7 @@
+---
+
+- include_tasks: roles/build/tasks/run.yaml
+  vars:
+    service: http
+  with_items:
+    - "{{ services['http'] }}"

@@ -2,23 +2,23 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: {{service}}-scorecheck
-  namespace: scoring
+  name: {{item['name']}}-{{service}}-scorecheck
+  namespace: blueteam-{{team}}
   labels:
-    app: {{service}}-scorecheck
+    app: {{item['name']}}-{{service}}-scorecheck
 spec:
   selector:
     matchLabels:
-      app: {{service}}-scorecheck
+      app: {{item['name']}}-{{service}}-scorecheck
   template:
     metadata:
       labels:  
-        app: {{service}}-scorecheck
-        deployment: {{service}}-scorecheck
+        app: {{item['name']}}-{{service}}-scorecheck
+        deployment: {{item['name']}}-{{service}}-scorecheck
     spec:
       containers:
-        - name: {{service}}-scorecheck
-          image: 100.65.1.83:5000/{{service}}-scorecheck:latest
+        - name: {{item['name']}}-{{service}}-scorecheck
+          image: localhost:5000/{{item['name']}}-{{service}}-scorecheck:latest
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: Always
@@ -37,7 +37,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{service}}-scorecheck
+  name: {{item['name']}}-{{service}}-scorecheck
   namespace: scoring
 spec:
   ports:
@@ -46,5 +46,5 @@ spec:
       port: 45281
       targetPort: 45281
   selector:
-    app: {{service}}-scorecheck
+    app: {{item['name']}}-{{service}}-scorecheck
   type: LoadBalancer
