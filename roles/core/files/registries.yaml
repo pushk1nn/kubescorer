@@ -1,8 +1,8 @@
 mirrors:
-  "localhost:30000":
+  "100.65.3.181:30000":
     endpoint:
-      - "http://localhost:30000"
+      - "http://100.65.3.181:30000"
 configs:
-  "http://localhost:30000":
+  "100.65.3.181:30000":
     tls:
       insecure_skip_verify: true
