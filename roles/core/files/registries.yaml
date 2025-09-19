@@ -1,8 +1,8 @@
 mirrors:
-  "image-registry.core.svc.cluster.local:5000":
+  "localhost:30000":
     endpoint:
-      - "image-registry.core.svc.cluster.local:5000"
+      - "http://localhost:30000"
 configs:
-  "image-registry.core.svc.cluster.local:5000":
+  "http://localhost:30000":
     tls:
       insecure_skip_verify: true
