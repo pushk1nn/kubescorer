@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: {{host}}-{{service}}-scorecheck
-          image: 100.65.3.181:30000/{{host}}-{{service}}-scorecheck-{{team}}:latest
+          image: 100.65.3.181:30000/{{host}}-{{service}}-scorecheck-{{team}}:v1
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: Always
