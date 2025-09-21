@@ -6,5 +6,7 @@ team_prefix: "blueteam"
 services:
   http:
     - name: "face"
+  mysql:
+    - name: "memory"
       
 teams: 3
