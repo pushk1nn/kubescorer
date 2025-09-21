@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-FROM gcr.io/kctf-docker/healthcheck@sha256:6709709a8cfd6e2d743c86d58398c00ca4eb26befd3b1a0a629ab35f91e98ef0
+FROM python:3.11-slim
 
 ARG SERVICE
 ENV SERVICE=${SERVICE}
@@ -19,6 +19,10 @@ ENV SERVICE=${SERVICE}
 ARG TEAM
 ENV TEAM=${TEAM}
 
-COPY shared/healthcheck_loop.sh ${SERVICE}/healthcheck.py shared/healthz_webserver.py /home/user/
+COPY shared/healthcheck_loop.sh ${SERVICE}/ shared/healthz_webserver.py /home/user/
 
+RUN if [ -f "/home/user/${SERVICE}/requirements.txt" ]; then \
+        pip install --no-cache-dir -r /home/user/${SERVICE}/requirements.txt ; \
+    fi
+    
 CMD /bin/bash -c "/home/user/healthcheck_loop.sh $TEAM & /home/user/healthz_webserver.py"
