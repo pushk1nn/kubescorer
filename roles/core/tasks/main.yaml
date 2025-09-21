@@ -60,3 +60,8 @@
   ansible.builtin.systemd_service:
     name: k3s.service
     state: restarted
+
+# TODO: Add docker daemon file for using http registry /etc/docker/daemon.json
+# {
+#   "insecure-registries": ["100.65.4.54:30000"]
+# }

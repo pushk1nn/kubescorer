@@ -3,8 +3,8 @@ all:
     ansible_user: debian
   hosts:
     kubescore-remote:
-      ansible_host: 100.65.3.181
-      ansible_ssh_private_key_file: /home/shaihulud/.ssh/key.txt
+      ansible_host: 100.65.4.54
+      ansible_ssh_private_key_file: /home/shaihulud/.ssh/greyteam.pem
       ansible_ssh_common_args: "-A -J sshproxy@ssh.cyberrange.rit.edu"
     kubescore-local:
       ansible_host: 127.0.0.1

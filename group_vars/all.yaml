@@ -6,5 +6,7 @@ team_prefix: "blueteam"
 services:
   http:
     - name: "arasaka"
+      
+    - name: "netwatch"
 
 teams: 3
