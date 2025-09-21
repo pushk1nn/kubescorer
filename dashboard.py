@@ -7,7 +7,8 @@ from rich import box
 
 # Define your services
 services = {
-    "team1": {"web": "8080"},
+    "team1": {"face": "32405"},
+    "team2": {"face": "31526"},
 }
 
 console = Console()
