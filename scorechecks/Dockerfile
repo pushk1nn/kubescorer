@@ -22,7 +22,7 @@ ENV TEAM=${TEAM}
 COPY shared/healthcheck_loop.sh ${SERVICE}/ shared/healthz_webserver.py /home/user/
 
 RUN if [ -f "/home/user/${SERVICE}/requirements.txt" ]; then \
-        pip install --no-cache-dir -r /home/user/${SERVICE}/requirements.txt ; \
+        pip install -r /home/user/${SERVICE}/requirements.txt ; \
     fi
-    
+
 CMD /bin/bash -c "/home/user/healthcheck_loop.sh $TEAM & /home/user/healthz_webserver.py"
