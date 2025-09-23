@@ -15,3 +15,11 @@
     host: "{{ item.1.name }}"
     team: "{{ item.0 }}"
   loop: "{{ query('cartesian', range(1, teams + 1) | list, services['mysql']) }}"
+
+# Deploy k3s scorechecks
+- include_tasks: roles/deploy/tasks/run.yaml
+  vars:
+    service: k3s
+    host: "{{ item.1.name }}"
+    team: "{{ item.0 }}"
+  loop: "{{ query('cartesian', range(1, teams + 1) | list, services['k3s']) }}"
