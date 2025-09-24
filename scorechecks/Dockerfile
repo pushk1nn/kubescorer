@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-FROM python:3.11-slim
+FROM 100.65.5.54:30000/scorechecker
 
 ARG SERVICE
 ENV SERVICE=${SERVICE}
