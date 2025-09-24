@@ -21,6 +21,8 @@ ENV TEAM=${TEAM}
 
 COPY shared/healthcheck_loop.sh ${SERVICE}/ shared/healthz_webserver.py /home/user/
 
+COPY shared/credentials.json /tmp/
+
 RUN if [ -f "/home/user/requirements.txt" ]; then \
         pip install -r /home/user/requirements.txt ; \
     fi

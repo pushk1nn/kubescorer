@@ -85,14 +85,14 @@ class HealthzHandler(http.server.BaseHTTPRequestHandler):
             body = self.rfile.read(length).decode()
             data = urllib.parse.parse_qs(body)
 
-            username = data.get("username", [""])[0]
+            # username = data.get("username", [""])[0]
             password = data.get("password", [""])[0]
 
             # store creds in JSON file
             with open(CRED_FILE, "w") as f:
-                json.dump({"username": username, "password": password}, f)
+                json.dump({"password": password}, f)
 
-            response = f"Stored credentials for {username}".encode()
+            response = f"Stored credentials!".encode()
             self.send_response(200)
             self.send_header("Content-type", "text/plain")
             self.send_header("Content-length", str(len(response)))

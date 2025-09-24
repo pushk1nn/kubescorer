@@ -8,11 +8,18 @@
 # from smb.SMBConnection import SMBConnection
 from ldap3 import Server, Connection, ALL
 import sys
+import json
 
-server = "10.0.1.14"    # cortex IP
+team = sys.argv[1]
+
+server = f"10.0.{team}.14"    # cortex IP
 share = "Public"           # SMB share name
-username = "Administrator"
-password = "Str0ngP@ssw0rd123!"
+username = "netrunner"
+
+with open('/tmp/credentials.json', 'r') as f:
+    data = json.load(f)
+    
+password = data['password']
 domain   = "NETRUNNER"     # Your AD domain NetBIOS name
 basedn   = "DC=net,DC=runner"  # base DN for bind (adjust if your domain changes)
 
@@ -24,7 +31,7 @@ basedn   = "DC=net,DC=runner"  # base DN for bind (adjust if your domain changes
 #         conn.close()
 #         return connected
 #     except Exception:
-#         return False
+#         return False  
     
 
 def check_ldap():
@@ -34,6 +41,7 @@ def check_ldap():
         ldap_user = f"{username}@net.runner"
         conn = Connection(ldap_server, user=ldap_user, password=password, auto_bind=True)
         conn.unbind()
+        print("good")
         exit(0)
     except Exception:
         exit(1)
