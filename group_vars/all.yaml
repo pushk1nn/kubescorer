@@ -10,5 +10,7 @@ services:
     - name: "memory"
   k3s:
     - name: "synapses"
+  ad:
+    - name: "cortex"
       
 teams: 3

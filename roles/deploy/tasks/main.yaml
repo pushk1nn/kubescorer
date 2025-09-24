@@ -23,3 +23,11 @@
     host: "{{ item.1.name }}"
     team: "{{ item.0 }}"
   loop: "{{ query('cartesian', range(1, teams + 1) | list, services['k3s']) }}"
+
+# Deploy AD scorechecks
+- include_tasks: roles/deploy/tasks/run.yaml
+  vars:
+    service: ad
+    host: "{{ item.1.name }}"
+    team: "{{ item.0 }}"
+  loop: "{{ query('cartesian', range(1, teams + 1) | list, services['ad']) }}" 
