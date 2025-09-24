@@ -77,7 +77,7 @@
 - name: Build an image and push it to a private repo 
   community.docker.docker_image: 
     build: 
-      path: templates 
+      path: roles/core/templates 
     name: "100.65.4.54:30000/scorechecker" 
     tag: v1 
     force_tag: true 
