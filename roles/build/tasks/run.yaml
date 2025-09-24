@@ -1,9 +1,9 @@
 ---
-- name: Remove existing Docker image (optional)
-  community.docker.docker_image:
-    name: "100.65.4.54:30000/{{ host }}-{{ service }}-scorecheck-{{team}}"
-    tag: v1
-    state: absent
+#- name: Remove existing Docker image (optional)
+#  community.docker.docker_image:
+#    name: "100.65.4.54:30000/{{ host }}-{{ service }}-scorecheck-{{team}}"
+#    tag: v1
+#    state: absent
 
 
 - name: Build an image and push it to a private repo
