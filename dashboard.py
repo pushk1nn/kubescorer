@@ -6,9 +6,10 @@ from rich.live import Live
 from rich import box
 
 # Define your services
+
 services = {
-    "team1": {"face": "32405", "synapses":"31542"},
-    "team2": {"face": "31526", "synapses":"32751"},
+    "team1": {"face": "32405", "synapses":"31542", "memory":"32081"},
+    "team2": {"face": "31526", "synapses":"32751", "memory":"30379"},
 }
 
 console = Console()
