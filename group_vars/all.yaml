@@ -14,5 +14,7 @@ services:
     - name: "cortex"
   chat:
     - name: "vocals"
+  winrm:
+    - name: "cyberdeck"
       
 teams: 3
