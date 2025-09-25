@@ -12,5 +12,7 @@ services:
     - name: "synapses"
   ad:
     - name: "cortex"
+  chat:
+    - name: "vocals"
       
 teams: 3
