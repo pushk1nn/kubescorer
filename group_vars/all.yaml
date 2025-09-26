@@ -16,5 +16,7 @@ services:
     - name: "vocals"
   winrm:
     - name: "cyberdeck"
+  mail:
+    - name: "uplink"
       
 teams: 3

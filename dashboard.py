@@ -21,7 +21,7 @@ def get_status():
         status[team] = {}
         for svc, port in svcs.items():
             try:
-                r = requests.get(f"http://127.0.0.1:{port}/healthz", timeout=2)
+                r = requests.get(f"http://100.65.4.54:{port}/healthz", timeout=2)
                 if "ok" in r.text.lower():
                     status[team][svc] = "[green]OK[/green]"
                 else:

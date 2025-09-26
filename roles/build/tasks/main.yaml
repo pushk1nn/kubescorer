@@ -47,3 +47,11 @@
     host: "{{ item.1.name }}"
     team: "{{ item.0 }}"
   loop: "{{ query('cartesian', range(1, teams + 1) | list, services['winrm']) }}"
+
+# Deploy Mail scorechecks
+- include_tasks: roles/build/tasks/run.yaml
+  vars:
+    service: mail
+    host: "{{ item.1.name }}"
+    team: "{{ item.0 }}"
+  loop: "{{ query('cartesian', range(1, teams + 1) | list, services['mail']) }}"
