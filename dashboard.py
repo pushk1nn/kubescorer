@@ -8,8 +8,8 @@ from rich import box
 # Define your services
 
 services = {
-    "team1": {"face": "32405", "synapses":"31542", "memory":"32081", "cortex":"31557", "vocals":"30546", "cyberdeck":"31886"},
-    "team2": {"face": "31526", "synapses":"32751", "memory":"30379", "cortex":"31806", "vocals":"31951", "cyberdeck":"30777"},
+    "team1": {"face": "32405", "synapses":"31542", "memory":"32081", "cortex":"31557", "vocals":"30546", "cyberdeck":"31886", "uplink":"30598"},
+    "team2": {"face": "31526", "synapses":"32751", "memory":"30379", "cortex":"31806", "vocals":"31951", "cyberdeck":"30777", "uplink":"30213"},
 }
 
 console = Console()
