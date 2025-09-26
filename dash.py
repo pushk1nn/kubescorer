@@ -16,7 +16,7 @@ async def dashboard():
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cyberpunk Vitals Dashboard</title>
+  <title>Vitals</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body { background: #000; color: #00ffcc; font-family: monospace; }
@@ -27,7 +27,7 @@ async def dashboard():
   </style>
 </head>
 <body>
-  <h1>🟢 Cyberpunk Uptime Dashboard</h1>
+  <h1>🟢 Vitals 🟢</h1>
   <table id="dash"></table>
 
   <script>
