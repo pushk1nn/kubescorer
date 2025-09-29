@@ -21,12 +21,24 @@ export TERM=linux
 export TERMINFO=/etc/terminfo
 
 while true; do
+  now=$(date +%s)
+  mod=$(( now % PERIOD ))
+  sleep_time=$(( PERIOD - mod ))
+  sleep $sleep_time
+
   echo -n "[$(date)] "
   if timeout "${TIMEOUT}" /home/user/healthcheck.py $1; then
     echo 'ok' | tee /tmp/healthz
+
+    curl -X POST http://100.65.4.54:8000/update \
+      -H "Content-Type: application/json" \
+      -d '{"team":"team1","service":"face","status":"ok"}'
   else
     echo -n "$? "
     echo 'err' | tee /tmp/healthz
+
+    curl -X POST http://100.65.4.54:8000/update \
+      -H "Content-Type: application/json" \
+      -d '{"team":"team1","service":"face","status":"err"}'
   fi
-  sleep "${PERIOD}"
 done
