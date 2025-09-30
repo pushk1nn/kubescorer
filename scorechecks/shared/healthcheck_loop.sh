@@ -30,15 +30,15 @@ while true; do
   if timeout "${TIMEOUT}" /home/user/healthcheck.py $1; then
     echo 'ok' | tee /tmp/healthz
 
-    curl -X POST http://100.65.4.54:8000/update \
-      -H "Content-Type: application/json" \
-      -d '{"team":"team1","service":"face","status":"ok"}'
+      curl -X POST http://100.65.4.54:8000/update \
+        -H "Content-Type: application/json" \
+        -d "{\"team\":\"team${TEAM}\",\"service\":\"${HOST}\",\"status\":\"ok\"}"
   else
     echo -n "$? "
     echo 'err' | tee /tmp/healthz
 
     curl -X POST http://100.65.4.54:8000/update \
       -H "Content-Type: application/json" \
-      -d '{"team":"team1","service":"face","status":"err"}'
+      -d "{\"team\":\"team${TEAM}\",\"service\":\"${HOST}\",\"status\":\"err\"}"
   fi
 done

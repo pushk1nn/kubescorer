@@ -13,6 +13,7 @@
       args:
         SERVICE: "{{ service }}"
         TEAM: "{{ team }}"
+        HOST: "{{ host }}"
     name: "100.65.4.54:30000/{{ host }}-{{ service }}-scorecheck-{{team}}"
     tag: v1
     force_tag: true
