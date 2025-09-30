@@ -19,6 +19,9 @@ ENV SERVICE=${SERVICE}
 ARG TEAM
 ENV TEAM=${TEAM}
 
+ARG HOST
+ENV HOST=${HOST}
+
 COPY shared/healthcheck_loop.sh ${SERVICE}/ shared/healthz_webserver.py /home/user/
 
 COPY shared/credentials.json /tmp/
