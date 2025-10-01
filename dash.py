@@ -27,26 +27,22 @@ scores = {
 # --------------------------
 @app.get("/status")
 async def status():
-    results = {}
+    results = {"scores": scores}   # add scores up top
     t = time.time()
     for team in services:
         results[team] = {}
         for svc in services[team]:
             base = health_values[team][svc]
-
-            if base > 2:  # healthy
-                if random.random() < 0.05:  # 5% chance of spike
-                    # Big quick spike (up to 10)
+            if base > 2:
+                if random.random() < 0.05:  # spike chance if you kept that
                     val = random.randint(7, 10)
                 else:
-                    # Stay near baseline (flat)
                     val = random.randint(3, 5)
             else:
-                # unhealthy → flatline
                 val = 1
-
             results[team][svc] = val
     return JSONResponse(results)
+
 
 
 
@@ -84,7 +80,6 @@ async def update_status(request: Request):
 # --------------------------
 @app.get("/", response_class=HTMLResponse)
 async def dashboard():
-    # Use json.dumps to safely inject Python dicts into JS
     services_json = json.dumps(services)
     chart_options = json.dumps({
         "responsive": False,
@@ -107,21 +102,20 @@ async def dashboard():
       background: #000;
       color: #00ffcc;
       font-family: monospace;
-      display: flex;              /* enable flexbox */
-      justify-content: center;    /* center horizontally */
-      align-items: center;        /* center vertically */
-      height: 100vh;              /* full screen height */
-      margin: 0;                  /* remove default body margin */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
     }}
-
     h1 {{
       color: #ff00ff;
       text-align: center;
-      width: 100%;                /* make sure it spans full width */
-      position: absolute;         /* keep it at the top */
-      top: 20px;                  /* spacing from top */
+      width: 100%;
+      position: absolute;
+      top: 20px;
     }}
-
     table {{
       border-collapse: collapse;
       color: #00ffcc;
@@ -131,7 +125,6 @@ async def dashboard():
   </style>
 </head>
 <body>
-  <h1></h1>
   <table id="dash"></table>
 
   <script>
@@ -143,50 +136,69 @@ async def dashboard():
       let html = "<tr><th>Team</th>";
       let svcNames = Object.keys(services[Object.keys(services)[0]]);
       for (let svc of svcNames) html += "<th>" + svc.toUpperCase() + "</th>";
-      html += "</tr>";
+      html += "<th>Score</th></tr>";  // Score column
 
       for (let team in services) {{
         html += "<tr><td><b style='color:#ff00ff'>" + team + "</b></td>";
         for (let svc in services[team]) {{
           html += "<td><canvas id='" + team + "-" + svc + "'></canvas></td>";
         }}
+        html += "<td id='" + team + "-score'>0</td>";
         html += "</tr>";
       }}
+
       document.getElementById("dash").innerHTML = html;
-    }}
 
-    function makeChart(id) {{
-      let ctx = document.getElementById(id).getContext("2d");
-      charts[id] = new Chart(ctx, {{
-        type: "line",
-        data: {{ labels: Array(20).fill(""), datasets:[{{ label: id, data: Array(20).fill(0), borderColor:"#00ff00", borderWidth:2, fill:false, tension:0.3, pointRadius:0 }}]}},
-        options: chartOptions
-      }});
-    }}
-
-    function initCharts() {{
-      for (let team in services) for (let svc in services[team]) makeChart(team + "-" + svc);
+      // Initialize charts after table creation
+      for (let team in services) {{
+        for (let svc in services[team]) {{
+          let id = team + "-" + svc;
+          let ctx = document.getElementById(id).getContext("2d");
+          charts[id] = new Chart(ctx, {{
+            type: "line",
+            data: {{
+              labels: Array(20).fill(""),
+              datasets: [{{
+                label: id,
+                data: Array(20).fill(0),
+                borderColor:"#00ff00",
+                borderWidth:2,
+                fill:false,
+                tension:0.3,
+                pointRadius:0
+              }}]
+            }},
+            options: chartOptions
+          }});
+        }}
+      }}
     }}
 
     async function updateCharts() {{
       const resp = await fetch("/status");
       const data = await resp.json();
-      for (let team in data) {{
-        for (let svc in data[team]) {{
+
+      for (let team in services) {{
+        for (let svc in services[team]) {{
           let id = team + "-" + svc;
           let chart = charts[id];
           let val = data[team][svc];
+
           chart.data.datasets[0].borderColor = val > 2 ? "#00ff00" : "#ff0033";
           chart.data.datasets[0].data.push(val);
           if (chart.data.datasets[0].data.length > 20) chart.data.datasets[0].data.shift();
           chart.update();
         }}
+
+        // Update score cell
+        if (data.scores && data.scores[team] !== undefined) {{
+          document.getElementById(team + "-score").innerText = data.scores[team];
+        }}
       }}
     }}
 
     createTable();
-    initCharts();
-    setInterval(updateCharts, 200);
+    setInterval(updateCharts, 1000); // slower updates
   </script>
 </body>
 </html>
