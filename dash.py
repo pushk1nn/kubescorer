@@ -5,8 +5,11 @@ import math
 import time
 import random
 import json
+import os
 
 app = FastAPI()
+
+RESET_SECRET = os.environ.get("RESET_SECRET")
 
 services = {
     "team1": {"face": "32405", "synapses":"31542", "memory":"32081", "cortex":"31557", "vocals":"30546", "cyberdeck":"31886", "uplink":"30598"},
@@ -74,6 +77,17 @@ async def update_status(request: Request):
 
     return {"message": "updated"}
 
+
+
+@app.post("/reset_scores")
+async def reset_scores(request: Request):
+    token = request.headers.get("X-Reset-Token")
+    if token != RESET_SECRET:
+        return JSONResponse({"error": "Unauthorized"}, status_code=401)
+
+    for team in scores:
+        scores[team] = 0
+    return {"message": "Scores reset"}
 
 # --------------------------
 # Frontend
