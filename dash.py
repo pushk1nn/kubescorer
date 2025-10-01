@@ -27,24 +27,27 @@ scores = {
 # --------------------------
 @app.get("/status")
 async def status():
-    """
-    Return current fluctuating values for charts.
-    Healthy services wiggle, unhealthy stay flat.
-    """
     results = {}
     t = time.time()
     for team in services:
         results[team] = {}
         for svc in services[team]:
             base = health_values[team][svc]
-            if base > 2:  # healthy → wiggle
-                fluct = math.sin(t * 3 + random.random())
-                val = base + fluct
-                val = max(0, min(10, val))  # clamp 0-10
-                results[team][svc] = val
-            else:  # unhealthy → flatline
-                results[team][svc] = base
+
+            if base > 2:  # healthy
+                if random.random() < 0.05:  # 5% chance of spike
+                    # Big quick spike (up to 10)
+                    val = random.randint(7, 10)
+                else:
+                    # Stay near baseline (flat)
+                    val = random.randint(3, 5)
+            else:
+                # unhealthy → flatline
+                val = 1
+
+            results[team][svc] = val
     return JSONResponse(results)
+
 
 
 @app.post("/update")
@@ -100,15 +103,35 @@ async def dashboard():
   <title>Vitals</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body {{ background: #000; color: #00ffcc; font-family: monospace; }}
-    h1 {{ color: #ff00ff; text-align: center; }}
-    table {{ margin: auto; border-collapse: collapse; color: #00ffcc; }}
+    body {{
+      background: #000;
+      color: #00ffcc;
+      font-family: monospace;
+      display: flex;              /* enable flexbox */
+      justify-content: center;    /* center horizontally */
+      align-items: center;        /* center vertically */
+      height: 100vh;              /* full screen height */
+      margin: 0;                  /* remove default body margin */
+    }}
+
+    h1 {{
+      color: #ff00ff;
+      text-align: center;
+      width: 100%;                /* make sure it spans full width */
+      position: absolute;         /* keep it at the top */
+      top: 20px;                  /* spacing from top */
+    }}
+
+    table {{
+      border-collapse: collapse;
+      color: #00ffcc;
+    }}
     th, td {{ padding: 10px; border: 1px solid #00ffcc; text-align: center; }}
     canvas {{ width: 120px !important; height: 60px !important; }}
   </style>
 </head>
 <body>
-  <h1>🟢 Vitals 🟢</h1>
+  <h1></h1>
   <table id="dash"></table>
 
   <script>
