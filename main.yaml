@@ -1,5 +1,6 @@
 ---
 
+# Run remote setup of k3s 
 - hosts: kubescore-remote
   gather_facts: false
   become: true
@@ -10,6 +11,7 @@
       tags: [setup]
       when: setup | default(false)
 
+# Runs local configuration to host scorechecks
 - hosts: kubescore-local
   gather_facts: false
   become: true
